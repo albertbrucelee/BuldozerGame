@@ -1,14 +1,14 @@
 
 GLubyte colorWall[3] = {66, 244, 101};
 class Wall{
+	float x;
+	float y;
+	float width;
+	float height;
+	
 	public:
 
-  float x;
-  float y;
-  float width;
-  float height;
-
-	Wall(float x2, float y2, float width2, float height2){
+	void set(float width2, float height2, float x2, float y2){
 		x=x2;
 		y=y2;
 		width=width2;
@@ -16,7 +16,7 @@ class Wall{
 		//color=color2;
 	}
 	
-	float coordUp(){
+	float coordTop(){
 		return y+height;
 	}
 	float coordDown(){
@@ -28,7 +28,21 @@ class Wall{
 	float coordRight(){
 		return x+width;
 	}
-	
+	/*
+	bool hitLeft(Buldozer *buldozer){
+		//jika buldozer di sebelah kiri
+		if(buldozer->coordRight < coordLeft())
+			return false;
+		//jika tidak kena batas bawah object (kondisi buldozer dibawah object)
+		if(!(buldozer.coordDown<coordDown && buldozer.coordUp<coordDown))
+			return false;
+		//jika tidak kena batas atas object (kondisi buldozer diatas object)
+		if(!(buldozer.coordUp>coordUp && buldozer.coordDown>coordUp))
+			return false;
+		return true;
+		
+	}
+	*/
 	void quads(float w, float h){
 		glBegin(GL_QUADS);
 			glVertex2f(0, 0);

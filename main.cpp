@@ -4,22 +4,19 @@
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
+#include <iostream>
+#include <vector>
+using namespace std;
 
 #include "object/grid.cpp"
+
 #include "object/wall.cpp"
 #include "object/buldozer.cpp"
 
-Wall wall1(-100,-100,5,200);
-Wall wall2(-100,45,200,5);
-Wall wall3(95,-100,5,200);
-Wall wall4(-100,-50,200,5);
-Buldozer buldozer(0,0,10,10);
+#define totalWall 8
+Wall wall[totalWall];
+Buldozer buldozer;
 
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE); // close program on ESC key
-}
 
 void setup_viewport(GLFWwindow* window)
 {
@@ -48,42 +45,70 @@ void quads(float width, float height){
 	glEnd();
 }
 
-void turnLeft(){
-	if(buldozer.coordLeft()>wall1.coordRight())	
-		buldozer.turnLeft();
-}
 void turnUp(){
-	if(buldozer.coordUp()<wall2.coordDown())	
-		buldozer.turnUp();
+	for(int i=0; i<totalWall; i++){
+		if(!(buldozer.canTurnUp(wall[i])))
+			return;
+	}
+	buldozer.turnUp();
 }
-void turnRight(){
-	if(buldozer.coordRight()<wall3.coordLeft())	
-		buldozer.turnRight();
+void turnLeft(){
+	for(int i=0; i<totalWall; i++){
+		if(!(buldozer.canTurnLeft(wall[i])))
+			return;
+	}
+	buldozer.turnLeft();
 }
 void turnDown(){
-	if(buldozer.coordDown()>wall4.coordUp())	
-		buldozer.turnDown();
+	for(int i=0; i<totalWall; i++){
+		if(!(buldozer.canTurnDown(wall[i])))
+			return;
+	}
+	buldozer.turnDown();
 }
-void processNormalKeys(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void turnRight(){
+	for(int i=0; i<totalWall; i++){
+		if(!(buldozer.canTurnRight(wall[i])))
+			return;
+	}
+	buldozer.turnRight();
+}
+
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
 	//if(action==GLFW_PRESS){		
-		switch(key) {
-			case GLFW_KEY_UP:
-				turnUp();
-				break;
-			case GLFW_KEY_DOWN:
-				turnDown();
-				break;
-			case GLFW_KEY_LEFT:
-				turnLeft();
-				break;
-			case GLFW_KEY_RIGHT:
-				turnRight();
-				break;
-		}
-	//}
+	switch(key) {
+		// close program on ESC key
+		case GLFW_KEY_ESCAPE:
+			glfwSetWindowShouldClose(window, GL_TRUE); 
+			break;
+		case GLFW_KEY_UP:
+			turnUp();
+			break;
+		case GLFW_KEY_DOWN:
+			turnDown();
+			break;
+		case GLFW_KEY_LEFT:
+			turnLeft();
+			break;
+		case GLFW_KEY_RIGHT:
+			turnRight();
+			break;
+	}
 }
 
-
+void createObject(){
+	buldozer.set(0,0,10,10);
+	
+	wall[0].set(5,200,-100,-100);	//wall kiri
+	wall[1].set(200,5,-100,45);		//wall atas
+	wall[2].set(5,200,95,-100);		//wall kanan
+	wall[3].set(200,5,-100,-50);	//wall bawah
+	
+	wall[4].set(10,30,-10,-15);
+	wall[5].set(10,30,10,-15);
+	wall[6].set(50,10,-15,-35);
+	wall[7].set(50,10,-15,25);
+}
 int main(void)
 {
     GLFWwindow* window;
@@ -100,21 +125,17 @@ int main(void)
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
     glfwSetKeyCallback(window, key_callback);
-    glfwSetKeyCallback(window, processNormalKeys);
+
+	createObject();
 
     while (!glfwWindowShouldClose(window))
     {
         setup_viewport(window);
         grid_display();
-
-        wall1.display();
-        wall2.display();
-        wall3.display();
-        wall4.display();
-
+		for(int i=0; i<totalWall; i++){
+			wall[i].display();
+		}
         buldozer.display();
-
-
 
 
         glfwSwapBuffers(window);
@@ -127,3 +148,29 @@ int main(void)
 }
 
 
+
+/*
+vector<Wall> walls;
+vector<Wall>::iterator it_walls;
+
+Wall wall;
+wall.set(5,200,-100,-100);
+walls.push_back(wall);
+wall.set(200,5,-100,45);
+walls.push_back(wall);
+wall.set(5,200,95,-100);
+walls.push_back(wall);
+wall.set(200,5,-100,-50);
+walls.push_back(wall);
+wall.set(10,10,15,15);
+walls.push_back(wall);
+
+
+for(it_walls=walls.begin(); it_walls!=walls.end(); ++it_walls) {
+	it_walls->display();
+} 
+for(it_walls=walls.begin(); it_walls!=walls.end(); ++it_walls) {
+	if(!(buldozer.canTurnUp(*it_walls)))
+		return;
+}	
+*/
