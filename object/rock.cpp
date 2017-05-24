@@ -1,6 +1,6 @@
 
-GLubyte colorWall[3] = {66, 244, 101};
-class Wall{
+GLubyte colorRock[3] = {66, 185, 244};
+class Rock{
 	float x;
 	float y;
 	float width;
@@ -28,6 +28,21 @@ class Wall{
 	float coordRight(){
 		return x+width;
 	}
+	
+	
+	void turnLeft(){
+		x--;
+	}
+	void turnUp(){
+		y++;
+	}
+	void turnRight(){
+		x++;
+	}
+	void turnDown(){
+		y--;
+	}
+	
 	/*
 	bool hitLeft(Buldozer *buldozer){
 		//jika buldozer di sebelah kiri
@@ -56,7 +71,7 @@ class Wall{
 	void display(){
 		glPushMatrix();
 			glTranslatef(x,y,0);
-			glColor3ubv(colorWall);
+			glColor3ubv(colorRock);
 			quads(width,height);
 		glPopMatrix();
 	}

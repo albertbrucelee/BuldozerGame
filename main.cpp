@@ -5,16 +5,19 @@
 #include <math.h>
 #include <time.h>
 #include <iostream>
-#include <vector>
-using namespace std;
 
 #include "object/grid.cpp"
 
 #include "object/wall.cpp"
+#include "object/rock.cpp"
 #include "object/buldozer.cpp"
 
 #define totalWall 8
+#define totalRock 2
+
 Wall wall[totalWall];
+Rock rock[totalRock];
+
 Buldozer buldozer;
 
 
@@ -45,19 +48,13 @@ void quads(float width, float height){
 	glEnd();
 }
 
+
 void turnUp(){
 	for(int i=0; i<totalWall; i++){
 		if(!(buldozer.canTurnUp(wall[i])))
 			return;
 	}
 	buldozer.turnUp();
-}
-void turnLeft(){
-	for(int i=0; i<totalWall; i++){
-		if(!(buldozer.canTurnLeft(wall[i])))
-			return;
-	}
-	buldozer.turnLeft();
 }
 void turnDown(){
 	for(int i=0; i<totalWall; i++){
@@ -66,12 +63,62 @@ void turnDown(){
 	}
 	buldozer.turnDown();
 }
+void turnLeft(){
+	for(int i=0; i<totalWall; i++){
+		if(!(buldozer.canTurnLeft(wall[i])))
+			return;
+	}
+	buldozer.turnLeft();
+}
 void turnRight(){
 	for(int i=0; i<totalWall; i++){
 		if(!(buldozer.canTurnRight(wall[i])))
 			return;
 	}
 	buldozer.turnRight();
+}
+
+
+bool pushUp(){
+	for(int i=0; i<totalRock; i++){
+		if(buldozer.canPushUp(rock[i])){
+			
+			buldozer.turnUp();
+			rock[i].turnUp();
+			return true;
+		}
+	}
+	return false;
+}
+bool pushDown(){
+	for(int i=0; i<totalRock; i++){
+		if(buldozer.canPushDown(rock[i])){
+			buldozer.turnDown();
+			rock[i].turnDown();
+			return true;
+		}
+	}
+	return false;
+}
+bool pushLeft(){
+	for(int i=0; i<totalRock; i++){
+		if(buldozer.canPushLeft(rock[i])){
+			buldozer.turnLeft();
+			rock[i].turnLeft();
+			return true;
+		}
+	}
+	return false;
+}
+bool pushRight(){
+	for(int i=0; i<totalRock; i++){
+		if(buldozer.canPushRight(rock[i])){
+			buldozer.turnRight();
+			rock[i].turnRight();
+			return true;
+		}
+	}
+	return false;
 }
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
@@ -82,15 +129,19 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 			glfwSetWindowShouldClose(window, GL_TRUE); 
 			break;
 		case GLFW_KEY_UP:
+			if(!pushUp())
 			turnUp();
 			break;
 		case GLFW_KEY_DOWN:
+			if(!pushDown())
 			turnDown();
 			break;
 		case GLFW_KEY_LEFT:
+			if(!pushLeft())
 			turnLeft();
 			break;
 		case GLFW_KEY_RIGHT:
+			if(!pushRight())
 			turnRight();
 			break;
 	}
@@ -108,7 +159,12 @@ void createObject(){
 	wall[5].set(10,30,10,-15);
 	wall[6].set(50,10,-15,-35);
 	wall[7].set(50,10,-15,25);
+	
+	
+	rock[0].set(10,10,-20,-25);
+	rock[1].set(10,10,20,-25);
 }
+
 int main(void)
 {
     GLFWwindow* window;
@@ -132,9 +188,15 @@ int main(void)
     {
         setup_viewport(window);
         grid_display();
+        
 		for(int i=0; i<totalWall; i++){
 			wall[i].display();
 		}
+		
+		for(int i=0; i<totalRock; i++){
+			rock[i].display();
+		}
+		
         buldozer.display();
 
 
@@ -150,6 +212,9 @@ int main(void)
 
 
 /*
+#include <vector>
+using namespace std;
+
 vector<Wall> walls;
 vector<Wall>::iterator it_walls;
 
