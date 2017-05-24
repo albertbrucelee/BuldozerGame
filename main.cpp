@@ -8,9 +8,11 @@
 
 #include "object/grid.cpp"
 
-#include "object/wall.cpp"
+#include "object/object.cpp"
 #include "object/rock.cpp"
+#include "object/wall.cpp"
 #include "object/buldozer.cpp"
+
 
 #define totalWall 8
 #define totalRock 2
@@ -19,7 +21,6 @@ Wall wall[totalWall];
 Rock rock[totalRock];
 
 Buldozer buldozer;
-
 
 void setup_viewport(GLFWwindow* window)
 {
@@ -49,42 +50,19 @@ void quads(float width, float height){
 }
 
 
-void turnUp(){
-	for(int i=0; i<totalWall; i++){
-		if(!(buldozer.canTurnUp(wall[i])))
-			return;
-	}
-	buldozer.turnUp();
-}
-void turnDown(){
-	for(int i=0; i<totalWall; i++){
-		if(!(buldozer.canTurnDown(wall[i])))
-			return;
-	}
-	buldozer.turnDown();
-}
-void turnLeft(){
-	for(int i=0; i<totalWall; i++){
-		if(!(buldozer.canTurnLeft(wall[i])))
-			return;
-	}
-	buldozer.turnLeft();
-}
-void turnRight(){
-	for(int i=0; i<totalWall; i++){
-		if(!(buldozer.canTurnRight(wall[i])))
-			return;
-	}
-	buldozer.turnRight();
-}
-
-
 bool pushUp(){
 	for(int i=0; i<totalRock; i++){
-		if(buldozer.canPushUp(rock[i])){
-			
-			buldozer.turnUp();
-			rock[i].turnUp();
+		//jika di atas buldozer ada rock
+		if(buldozer.existRockAbove(rock[i])){
+			//jika di atas batu tidak ada dinding && di atas batu tidak ada batu yang lain && di atas buldozer tidak ada dinding (kondisi hanya sebagian buldozer yang mengenai batu, dan sebagian lainnya mengenai dinding)
+			if(rock[i].noObjectAbove(wall) && rock[i].noRockAbove(rock, i) && buldozer.noObjectAbove(wall)){	// && rock[i].turnUp(rock)
+				//buldozer move ke atas
+				buldozer.moveUp();
+				//rock move ke atas
+				rock[i].moveUp();
+				return true;
+			}
+			//true karena di atas buldozer ada rock
 			return true;
 		}
 	}
@@ -92,9 +70,17 @@ bool pushUp(){
 }
 bool pushDown(){
 	for(int i=0; i<totalRock; i++){
-		if(buldozer.canPushDown(rock[i])){
-			buldozer.turnDown();
-			rock[i].turnDown();
+		//jika di bawah buldozer ada rock
+		if(buldozer.existRockBelow(rock[i])){
+			//jika di bawah batu tidak ada dinding && di bawah batu tidak ada batu yang lain
+			if(rock[i].noObjectBelow(wall) && rock[i].noRockBelow(rock, i) && buldozer.noObjectBelow(wall)){	// && rock[i].turnUp(rock)
+				//buldozer move ke bawah
+				buldozer.moveDown();
+				//rock move ke bawah
+				rock[i].moveDown();
+				return true;
+			}
+			//true karena di bawah buldozer ada rock
 			return true;
 		}
 	}
@@ -102,9 +88,17 @@ bool pushDown(){
 }
 bool pushLeft(){
 	for(int i=0; i<totalRock; i++){
-		if(buldozer.canPushLeft(rock[i])){
-			buldozer.turnLeft();
-			rock[i].turnLeft();
+		//jika di kiri buldozer ada rock
+		if(buldozer.existRockLeft(rock[i])){
+			//jika di kiri batu tidak ada dinding && di kiri batu tidak ada batu yang lain
+			if(rock[i].noObjectLeft(wall) && rock[i].noRockLeft(rock, i) && buldozer.noObjectLeft(wall)){	// && rock[i].turnUp(rock)
+				//buldozer move ke kiri
+				buldozer.moveLeft();
+				//rock move ke kiri
+				rock[i].moveLeft();
+				return true;
+			}
+			//true karena di kiri buldozer ada rock
 			return true;
 		}
 	}
@@ -112,9 +106,18 @@ bool pushLeft(){
 }
 bool pushRight(){
 	for(int i=0; i<totalRock; i++){
-		if(buldozer.canPushRight(rock[i])){
-			buldozer.turnRight();
-			rock[i].turnRight();
+		//jika di kanan buldozer ada rock
+		if(buldozer.existRockRight(rock[i])){
+			//jika di kanan batu tidak ada dinding && di kanan batu tidak ada batu yang lain
+			if(rock[i].noObjectRight(wall) && rock[i].noRockRight(rock, i) && buldozer.noObjectRight(wall)){	// && rock[i].turnUp(rock)
+				//buldozer move ke kanan
+				buldozer.moveRight();
+				//rock move ke kanan
+				rock[i].moveRight();
+				//push berhasil
+				return true;
+			}
+			//true karena di kanan buldozer ada rock
 			return true;
 		}
 	}
@@ -122,33 +125,46 @@ bool pushRight(){
 }
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
-	//if(action==GLFW_PRESS){		
-	switch(key) {
-		// close program on ESC key
-		case GLFW_KEY_ESCAPE:
-			glfwSetWindowShouldClose(window, GL_TRUE); 
-			break;
-		case GLFW_KEY_UP:
-			if(!pushUp())
-			turnUp();
-			break;
-		case GLFW_KEY_DOWN:
-			if(!pushDown())
-			turnDown();
-			break;
-		case GLFW_KEY_LEFT:
-			if(!pushLeft())
-			turnLeft();
-			break;
-		case GLFW_KEY_RIGHT:
-			if(!pushRight())
-			turnRight();
-			break;
+	if(action==GLFW_PRESS || action==GLFW_REPEAT){	
+		switch(key) {
+			// close program on ESC key
+			case GLFW_KEY_ESCAPE:
+				glfwSetWindowShouldClose(window, GL_TRUE); 
+				break;
+			case GLFW_KEY_UP:
+				//panggil buldozer push up
+				if(!pushUp()){
+					// jika buldozer gagal push up (di atas buldozer tidak ada batu), maka buldozer bisa bergerak ke atas.
+					// bisa ke atas jika di atas buldozer tidak ada dinding
+					if(buldozer.noObjectAbove(wall))
+						//buldozer bergerak ke atas
+						buldozer.moveUp();
+				}
+				break;
+			case GLFW_KEY_DOWN:
+				if(!pushDown()){
+					if(buldozer.noObjectBelow(wall))
+						buldozer.moveDown();
+				}
+				break;
+			case GLFW_KEY_LEFT:
+				if(!pushLeft()){
+					if(buldozer.noObjectLeft(wall))
+						buldozer.moveLeft();
+				}
+				break;
+			case GLFW_KEY_RIGHT:
+				if(!pushRight()){
+					if(buldozer.noObjectRight(wall))
+						buldozer.moveRight();
+				}
+				break;
+		}
 	}
 }
 
 void createObject(){
-	buldozer.set(0,0,10,10);
+	buldozer.set(10,10, 0, 0);
 	
 	wall[0].set(5,200,-100,-100);	//wall kiri
 	wall[1].set(200,5,-100,45);		//wall atas
@@ -161,7 +177,7 @@ void createObject(){
 	wall[7].set(50,10,-15,25);
 	
 	
-	rock[0].set(10,10,-20,-25);
+	rock[0].set(10,10,-20,-25);	//-20,-25
 	rock[1].set(10,10,20,-25);
 }
 
