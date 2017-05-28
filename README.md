@@ -12,7 +12,7 @@ Developed by:
 You can freely modify the program, under the GNU License :)
 
 
-### Game Play ###
+# Game Play #
 
 Buldozer must move all the rock to destination point
 
