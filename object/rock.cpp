@@ -1,39 +1,83 @@
 
 GLubyte colorRock[3] = {66, 185, 244};
-class Rock: public Object{
+class Rock: public Moveobject{
 	
 	public:
-	void display(){
-		glColor3ubv(colorRock);
-		Object::display();
-	}
-	
-	bool noRockAbove(Rock rock[], int index){
-		for(int i=0; i<(int)sizeof(&rock); i++){
-			if(index!=i && !(canTurnUp(rock[i])))
-				return false;
+		void display(){
+			glColor3ubv(colorRock);
+			Object::display();
 		}
-		return true;
-	}
-	bool noRockBelow(Rock rock[], int index){
-		for(int i=0; i<(int)sizeof(&rock); i++){
-			if(index!=i && !(canTurnDown(rock[i])))
-				return false;
+		
+		//############ Apakah batu tidak berhimpit dengan batu lain ############
+		bool notHitRockTop(Rock rock[], int index){
+			for(int i=0; i<totalRock; i++){
+				if(index!=i && !(canTurnUp(rock[i])))
+					return false;
+			}
+			return true;
 		}
-		return true;
-	}
-	bool noRockLeft(Rock rock[], int index){
-		for(int i=0; i<(int)sizeof(&rock); i++){
-			if(index!=i && !(canTurnLeft(rock[i])))
-				return false;
+		bool notHitRockDown(Rock rock[], int index){
+			for(int i=0; i<totalRock; i++){
+				if(index!=i && !(canTurnDown(rock[i])))
+					return false;
+			}
+			return true;
 		}
-		return true;
-	}
-	bool noRockRight(Rock rock[], int index){
-		for(int i=0; i<(int)sizeof(&rock); i++){
-			if(index!=i && !(canTurnRight(rock[i])))
-				return false;
+		bool notHitRockLeft(Rock rock[], int index){
+			for(int i=0; i<totalRock; i++){
+				if(index!=i && !(canTurnLeft(rock[i])))
+					return false;
+			}
+			return true;
 		}
-		return true;
-	}
+		bool notHitRockRight(Rock rock[], int index){
+			for(int i=0; i<totalRock; i++){
+				if(index!=i && !(canTurnRight(rock[i])))
+					return false;
+			}
+			return true;
+		}
+		
+		
+		
+		//fungsi apakah rock telah diatas point
+		//true jika coord atas batu sama dengan coord atas object, coord bawah batu sama dengan coord bawah object, coord kiri batu sama dengan coord kiri object, coord kanan batu sama dengan coord kanan object, 
+		//return id point jika true
+		//return -1 jika tidak
+		int calcPoint(Object object[]){
+			for(int i=0; i<totalRock; i++){
+				//cout << "calcPoint" << i << endl;
+				//cout << coordTop() << " " << object[i].coordTop() << endl;
+				//cout << coordDown() << " " << object[i].coordDown() << endl;
+				//cout << coordLeft() << " " << object[i].coordLeft() << endl;
+				//cout << coordRight() << " " << object[i].coordRight() << endl;
+				//cout << endl;
+				if(coordTop()!=object[i].coordTop())
+					continue;
+				if(coordDown()!=object[i].coordDown())	
+					continue;
+				if(coordLeft()!=object[i].coordLeft())	
+					continue;
+				if(coordRight()==object[i].coordRight())
+					return i;			
+			}
+			return -1;
+		}
+		
+		//fungsi apakah rock berhimpit dengan tembok
+		bool calcFailed(Object object[]){
+			//tembok kiri
+			if(coordLeft() == object[0].coordRight())
+				return true;
+			//tembok atas
+			if(coordTop() == object[1].coordDown())
+				return true;
+			//tembok kanan
+			if(coordRight() == object[2].coordLeft())
+				return true;
+			//tembok bawah
+			if(coordDown() == object[3].coordTop())
+				return true;
+			return false;
+		}
 };
