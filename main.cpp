@@ -37,6 +37,7 @@ using namespace std;
 #include "object/wall.cpp"
 #include "object/buldozer.cpp"
 #include "object/point.cpp"
+#include "finish.cpp"
 #include "gameplay.cpp"
 
 Gameplay gameplay;
@@ -60,14 +61,6 @@ void setup_viewport(GLFWwindow* window)
 }
 
 
-void quads(float width, float height){
-	glBegin(GL_QUADS);
-		glVertex2f(0, 0);
-		glVertex2f(0+width, 0);
-		glVertex2f(0+width, 0+height);
-		glVertex2f(0, 0+height);
-	glEnd();
-}
 
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
@@ -135,7 +128,6 @@ int main(void)
 		else if(gameplay.calcFinish()){
 			gameplay.win();
 		}
-			
 		
 
         glfwSwapBuffers(window);

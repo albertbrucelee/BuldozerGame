@@ -226,13 +226,17 @@ class Gameplay{
 		
 		//kalah
 		void loose(){
-			cout << "You loose :( " << totalRockFinish << endl;
+			cout << "You loose :( " << endl;
 			//tampilkan pop up kalah
+			Finish finish;
+			finish.displayLoose();
 		}
 		//menang
 		void win(){
 			cout << "You win :) " << endl;
 			//tampilkan pop up menang
+			Finish finish;
+			finish.displayWin();
 		}
 };
 	
