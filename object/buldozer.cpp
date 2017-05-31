@@ -1,11 +1,13 @@
 
 GLubyte colorBuldozer[3] = {178, 68, 3};
+char textureBuldozer[] = "texture/Buldozer.tga";
 class Buldozer: public Moveobject{
 	
 	public:
 	
 		void display(){
-			glColor3ubv(colorBuldozer);
+			//glColor3ubv(colorBuldozer);
+			setTexture(textureBuldozer);
 			Object::display();
 		}
 		

@@ -1,5 +1,4 @@
 
-const float width = 10;
 
 Wall wall[totalWall];
 Rock rock[totalRock];
@@ -24,7 +23,7 @@ class Gameplay{
 			for(int i=0; i<totalRock; i++)
 				pairedRockPoint[i] = -1;
 			
-			buldozer.set(10,10, 0, 0);
+			buldozer.set(WIDTH,WIDTH, 0, 0);
 			
 			wall[0].set(5,200,-100,-100);	//wall kiri
 			wall[1].set(200,5,-100,45);		//wall atas
@@ -36,26 +35,26 @@ class Gameplay{
 			wall[6].set(50,10,-15,-35);
 			wall[7].set(50,10,-15,25);
 			
-			point[0].set(width,width,-50,-20);
-			point[1].set(width,width,-75,-40);
+			point[0].set(WIDTH,WIDTH,-50,-20);
+			point[1].set(WIDTH,WIDTH,-75,-40);
 			
-			rock[0].set(width,width,-20,-25);	//-20,-25
-			rock[1].set(width,width,20,-25);
+			rock[0].set(WIDTH,WIDTH,-20,-25);	//-20,-25
+			rock[1].set(WIDTH,WIDTH,20,-25);
+			
 		}
 		//display semua object
 		void displayObject(){ 
+			buldozer.display();
 			for(int i=0; i<totalWall; i++){
 				wall[i].display();
-			}
-			
-			for(int i=0; i<totalRock; i++){
-				point[i].display();
 			}
 			for(int i=0; i<totalRock; i++){
 				rock[i].display();
 			}
+			for(int i=0; i<totalRock; i++){
+				point[i].display();
+			}
 			
-			buldozer.display();
 		}
 				
 		
@@ -226,14 +225,14 @@ class Gameplay{
 		
 		//kalah
 		void loose(){
-			cout << "You loose :( " << endl;
+			//cout << "You loose :( " << endl;
 			//tampilkan pop up kalah
 			Finish finish;
 			finish.displayLoose();
 		}
 		//menang
 		void win(){
-			cout << "You win :) " << endl;
+			//cout << "You win :) " << endl;
 			//tampilkan pop up menang
 			Finish finish;
 			finish.displayWin();

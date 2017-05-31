@@ -22,12 +22,16 @@
 #include <iostream>
 using namespace std;
 
+const float WIDTH = 10;
 
 #define frameWidth 200
 #define frameHeight 100
 
 #define totalWall 8
 #define totalRock 2
+
+#include "lib/tga.h"
+#include "lib/tga.c"
 
 #include "object/grid.cpp"
 
@@ -64,7 +68,7 @@ void setup_viewport(GLFWwindow* window)
 
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
-	if(action==GLFW_PRESS || action==GLFW_REPEAT){	
+	if(action==GLFW_PRESS || action==GLFW_REPEAT){
 		//gameplay key input (while not loose and not win)
 		if(!gameplay.calcFailed() && !gameplay.calcFinish()){
 			switch(key) {
@@ -114,11 +118,11 @@ int main(void)
     while (!glfwWindowShouldClose(window))
     {
         setup_viewport(window);
+        glEnable(GL_DEPTH_TEST);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        grid_display();
-        
-        //tampilkan object
-		gameplay.displayObject();
+        //grid_display();
+			//gameplay.win();
 		
 		//apakah kalah?
         if(gameplay.calcFailed()){
@@ -128,6 +132,9 @@ int main(void)
 		else if(gameplay.calcFinish()){
 			gameplay.win();
 		}
+		
+        //tampilkan object
+		gameplay.displayObject();
 		
 
         glfwSwapBuffers(window);

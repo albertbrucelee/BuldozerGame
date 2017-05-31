@@ -1,10 +1,11 @@
 
 GLubyte colorRock[3] = {66, 185, 244};
+char textureRock[] = "texture/box.tga";
 class Rock: public Moveobject{
 	
 	public:
 		void display(){
-			glColor3ubv(colorRock);
+			setTexture(textureRock);
 			Object::display();
 		}
 		
