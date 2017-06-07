@@ -19,7 +19,7 @@ map<int, int>::iterator finishRock_it;
 bool rockFailed;
 
 
-char backgroundMusicLocation[] = "sound/getout.ogg";
+char backgroundMusicLocation[] = "sound/backgroundMusic.ogg";
 int backgroundMusicVolume = 50;
 
 

@@ -4,8 +4,8 @@ GLubyte colorLoose[3] = {214, 10, 10};
 char textureFinish[] = "texture/win.tga";
 char textureLoose[] = "texture/lose.tga";
 		
-char winSoundLocation[] = "sound/bell.wav";
-char loseSoundLocation[] = "sound/explosion.wav";
+char winSoundLocation[] = "sound/win.wav";
+char loseSoundLocation[] = "sound/lose.wav";
 int finishSoundVolume = 100;
 
 class Finish : public Object{
