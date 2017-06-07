@@ -7,6 +7,7 @@ class Object{
 		float width;
 		float height;
 		char* texture;
+		float rotate;
 	
 		
 	public:
@@ -18,9 +19,9 @@ class Object{
 			loadTGA(texture, 1);//load gambar texture box ke bidang
 
 		}
-		void quads(float w, float h){
-			float tw = w/WIDTH;	//texture width
-			float th = h/WIDTH;	//texture height
+		void quads(){
+			float tw = width/WIDTH;		//texture width
+			float th = height/WIDTH;	//texture height
 			glEnable(GL_TEXTURE_2D);
 			glBindTexture (GL_TEXTURE_2D, 1); 
 			glBegin(GL_QUADS);
@@ -29,13 +30,13 @@ class Object{
 				glVertex2f(0, 0);
 				//kanan bawah
 				glTexCoord2f(tw, 0.0f);
-				glVertex2f(0+w, 0);
+				glVertex2f(0+width, 0);
 				//kanan atas
 				glTexCoord2f(tw, th);
-				glVertex2f(0+w, 0+h);
+				glVertex2f(0+width, 0+height);
 				//kiri atas
 				glTexCoord2f(0.0f, th);
-				glVertex2f(0, 0+h);
+				glVertex2f(0, 0+height);
 			glEnd();
 			glDisable(GL_TEXTURE_2D);
 		}
@@ -53,7 +54,15 @@ class Object{
 			glTga();
 			glPushMatrix();
 				glTranslatef(x,y,0);
-				quads(width,height);
+				if(rotate!=0) {
+					//geser ke posisi semula
+					glTranslatef(width/2,height/2,0);
+					//rotate
+					glRotatef(rotate,0,0,1);
+					//geser, agar titik tengah di 0,0
+					glTranslatef(-width/2,-height/2,0);
+				}
+				quads();
 			glPopMatrix();
 		}
 		

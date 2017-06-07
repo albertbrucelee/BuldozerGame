@@ -9,7 +9,8 @@ class Rock: public Moveobject{
 			Object::display();
 		}
 		
-		//############ Apakah batu tidak berhimpit dengan batu lain ############
+		/*
+		//############ Apakah Object tidak berhimpit dengan batu lain ############
 		bool notHitRockTop(Rock rock[], int index){
 			for(int i=0; i<totalRock; i++){
 				if(index!=i && !(canTurnUp(rock[i])))
@@ -38,7 +39,7 @@ class Rock: public Moveobject{
 			}
 			return true;
 		}
-		
+		*/
 		
 		
 		//fungsi apakah rock telah diatas point

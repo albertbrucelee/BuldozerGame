@@ -1,4 +1,8 @@
-
+template<typename T, size_t N>
+size_t arraySize( T(&)[N] )
+{
+  return(N);
+}
 class Moveobject: public Object {
 		
 	public:
@@ -73,31 +77,41 @@ class Moveobject: public Object {
 		}
 		
 		//########## Fungsi object1 tidak kena object lain #############
-		bool notHitTop(Object object[]){
-			for(int i=0; i<(int)sizeof(&object); i++){
-				if(!(canTurnUp(object[i])))
-					return false;
+		//index adalah kode object yg dikecualikan (tidak ikut diperhitungkan)
+		//set index=-1, jika tidak ada pengecualian
+		bool notHitTop(Object object[], int n, int index){
+			for(int i=0; i<n; i++){
+				if(index!=i){
+					if(!(canTurnUp(object[i])))
+						return false;
+				}
 			}
 			return true;
 		}
-		bool notHitDown(Object object[]){
-			for(int i=0; i<(int)sizeof(&object); i++){
-				if(!(canTurnDown(object[i])))
-					return false;
+		bool notHitDown(Object object[], int n, int index){
+			for(int i=0; i<n; i++){
+				if(index!=i){
+					if(!(canTurnDown(object[i])))
+						return false;
+				}
 			}
 			return true;
 		}
-		bool notHitLeft(Object object[]){
-			for(int i=0; i<(int)sizeof(&object); i++){
-				if(!(canTurnLeft(object[i])))
-					return false;
+		bool notHitLeft(Object object[], int n, int index){
+			for(int i=0; i<n; i++){
+				if(index!=i){
+					if(!(canTurnLeft(object[i])))
+						return false;
+				}
 			}
 			return true;
 		}
-		bool notHitRight(Object object[]){
-			for(int i=0; i<(int)sizeof(&object); i++){
-				if(!(canTurnRight(object[i])))
-					return false;
+		bool notHitRight(Object object[], int n, int index){
+			for(int i=0; i<n; i++){
+				if(index!=i){
+					if(!(canTurnRight(object[i])))
+						return false;
+				}
 			}
 			return true;
 		}

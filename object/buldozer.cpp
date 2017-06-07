@@ -2,7 +2,6 @@
 GLubyte colorBuldozer[3] = {178, 68, 3};
 char textureBuldozer[] = "texture/Buldozer.tga";
 class Buldozer: public Moveobject{
-	
 	public:
 	
 		void display(){
@@ -11,7 +10,24 @@ class Buldozer: public Moveobject{
 			Object::display();
 		}
 		
-		//############ Apakah buldozer kena object lain ############
+		void moveLeft(){
+			rotate = 90;
+			Moveobject::moveLeft();
+		}
+		void moveUp(){
+			rotate = 0;
+			Moveobject::moveUp();
+		}
+		void moveRight(){
+			rotate = 270;
+			Moveobject::moveRight();
+		}
+		void moveDown(){
+			rotate = 180;
+			Moveobject::moveDown();
+		}
+		
+		//############ Apakah buldozer kena rock lain ############
 		//true jika nempel dengan object
 		bool hitRockTop(Object& object){
 			if(coordTop()<object.coordDown())	// posisi buldozer di bawah object. tidak bisa push jika coord paling atas object kurang dari coord paling bawah object (tidak nempel)

@@ -1,3 +1,4 @@
+
 /*
  * Buldozer Game
  * May 2017
@@ -20,6 +21,8 @@
 #include <time.h>
 #include <string.h>
 #include <iostream>
+#include <map>
+
 using namespace std;
 
 const float WIDTH = 10;
@@ -27,8 +30,8 @@ const float WIDTH = 10;
 #define frameWidth 200
 #define frameHeight 100
 
-#define totalWall 8
-#define totalRock 2
+#define totalWall 20
+#define totalRock 6
 
 #include "lib/tga.h"
 #include "lib/tga.c"
@@ -69,7 +72,7 @@ void setup_viewport(GLFWwindow* window)
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
 	if(action==GLFW_PRESS || action==GLFW_REPEAT){
-		//gameplay key input (while not loose and not win)
+		//gameplay key input (while not lose and not win)
 		if(!gameplay.calcFailed() && !gameplay.calcFinish()){
 			switch(key) {
 				// close program on ESC key
@@ -90,6 +93,16 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 					break;
 			}
 		}
+		//if game over (win/lose)
+		else{
+			switch(key) {
+				// close program on ESC key
+				case GLFW_KEY_ENTER:
+					gameplay.restart();
+					break;
+			}
+		}
+			
 	}
 }
 
@@ -152,10 +165,8 @@ int main(void)
 /*
 #include <vector>
 using namespace std;
-
 vector<Wall> walls;
 vector<Wall>::iterator it_walls;
-
 Wall wall;
 wall.set(5,200,-100,-100);
 walls.push_back(wall);
@@ -167,8 +178,6 @@ wall.set(200,5,-100,-50);
 walls.push_back(wall);
 wall.set(10,10,15,15);
 walls.push_back(wall);
-
-
 for(it_walls=walls.begin(); it_walls!=walls.end(); ++it_walls) {
 	it_walls->display();
 } 
