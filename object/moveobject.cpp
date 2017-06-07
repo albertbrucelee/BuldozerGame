@@ -1,8 +1,4 @@
-template<typename T, size_t N>
-size_t arraySize( T(&)[N] )
-{
-  return(N);
-}
+
 class Moveobject: public Object {
 	Sound sound;
 		

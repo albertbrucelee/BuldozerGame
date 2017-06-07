@@ -1,7 +1,7 @@
 
 GLubyte colorBuldozer[3] = {178, 68, 3};
 char textureBuldozer[] = "texture/Buldozer.tga";
-char buldozerSound[] = "sound/bell.wav";
+char buldozerSound[] = "sound/buldozer.wav";
 int buldozerSoundVolume = 80;
 
 class Buldozer: public Moveobject{

@@ -1,7 +1,7 @@
 
 GLubyte colorRock[3] = {66, 185, 244};
 char textureRock[] = "texture/box.tga";
-char rockSound[] = "sound/explosion.wav";
+char rockSound[] = "sound/rock.wav";
 int rockSoundVolume = 100;
 
 class Rock: public Moveobject{
