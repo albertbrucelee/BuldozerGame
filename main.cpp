@@ -135,7 +135,7 @@ int main(void)
     {
         setup_viewport(window);
         glEnable(GL_DEPTH_TEST);
-        glClearColor( 0.94, 0.93, 0.93, 0);
+        glClearColor( 1, 0.972, 0.862, 0);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         //grid_display();
