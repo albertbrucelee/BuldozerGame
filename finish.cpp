@@ -2,15 +2,23 @@
 GLubyte colorWin[3] = {23, 10, 209};
 GLubyte colorLoose[3] = {214, 10, 10};
 char textureFinish[] = "texture/win.tga";
-char textureLoose[] = "texture/box.tga";
+char textureLoose[] = "texture/lose.tga";
 		
+char winSoundLocation[] = "sound/bell.wav";
+char loseSoundLocation[] = "sound/explosion.wav";
+int finishSoundVolume = 100;
+
 class Finish : public Object{
 	float width;
 	float height;
+	Sound finishMusic;
+	bool isFinish;
+	
 	public:
 		Finish(){
 			width = 100;
 			height = 50;
+			isFinish = false;
 		}
 		
 		void glTga(void)
@@ -57,6 +65,26 @@ class Finish : public Object{
 		void displayWin(){
 			setTexture(textureFinish);
 			display();
+		}
+		void playLoseSound(){
+			if(!isFinish){
+				finishMusic.set(loseSoundLocation, finishSoundVolume);
+				finishMusic.loop();
+				finishMusic.play();
+				isFinish = true;
+			}
+		}
+		void playWinSound(){
+			if(!isFinish){
+				finishMusic.set(winSoundLocation, finishSoundVolume);
+				finishMusic.loop();
+				finishMusic.play();
+				isFinish = true;
+			}
+		}
+		void stop(){
+			isFinish = false;
+			finishMusic.stop();
 		}
 		
 };

@@ -22,7 +22,7 @@
 #include <string.h>
 #include <iostream>
 #include <map>
-
+//g++ -Wall -o "%e" "%f" -lglfw3 -lGL -lX11 -lXi -lXrandr -lXxf86vm -lXinerama -lXcursor -lrt -lm -pthread -lglut -lGLU -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 using namespace std;
 
 const float WIDTH = 10;
@@ -35,9 +35,12 @@ const float WIDTH = 10;
 
 #include "lib/tga.h"
 #include "lib/tga.c"
+#include <SFML/Audio.hpp>
+
 
 #include "object/grid.cpp"
 
+#include "sound.cpp"
 #include "object/object.cpp"
 #include "object/moveobject.cpp"
 #include "object/rock.cpp"
@@ -98,7 +101,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 			switch(key) {
 				// close program on ESC key
 				case GLFW_KEY_ENTER:
-					gameplay.restart();
+					gameplay.reset();
 					break;
 			}
 		}
@@ -109,7 +112,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 
 int main(void)
 {
-		
+	
     GLFWwindow* window;
     if (!glfwInit()) exit(EXIT_FAILURE);
 
@@ -126,7 +129,7 @@ int main(void)
     glfwSetKeyCallback(window, key_callback);
 	
 	//buat object
-	gameplay.createObject();
+	gameplay.set();
 
     while (!glfwWindowShouldClose(window))
     {

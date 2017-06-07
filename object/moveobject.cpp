@@ -4,18 +4,30 @@ size_t arraySize( T(&)[N] )
   return(N);
 }
 class Moveobject: public Object {
+	Sound sound;
 		
 	public:
+		void setSound(char *soundLocation, int volume){
+			sound.set(soundLocation, volume);
+		}
 		void moveLeft(){
+			sound.stop();
+			sound.play();
 			x--;
 		}
 		void moveUp(){
+			sound.stop();
+			sound.play();
 			y++;
 		}
 		void moveRight(){
+			sound.stop();
+			sound.play();
 			x++;
 		}
 		void moveDown(){
+			sound.stop();
+			sound.play();
 			y--;
 		}
 		

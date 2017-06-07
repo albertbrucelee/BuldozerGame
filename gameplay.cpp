@@ -19,19 +19,36 @@ map<int, int>::iterator finishRock_it;
 bool rockFailed;
 
 
+char backgroundMusicLocation[] = "sound/getout.ogg";
+int backgroundMusicVolume = 50;
+
+
 class Gameplay{
 	private:
+		Sound backgroundMusic;
+		Finish finish;
 	
 	public:
-		void restart(){
+		void reset(){
+			finish.stop();
+			finishRock.clear();
+			rockFailed = false;
 			createObject();
+			backgroundMusic.loop();
+			backgroundMusic.play();
 		}
-		//membuat semua object
-		void createObject(){
+		void set(){
 			//for(int i=0; i<totalRock; i++)
 			//	pairedRockPoint[i] = -1;
 			//totalRockFinish = 0;
 			rockFailed = false;
+			createObject();
+			backgroundMusic.set(backgroundMusicLocation, backgroundMusicVolume);
+			backgroundMusic.loop();
+			backgroundMusic.play();
+		}
+		//membuat semua object
+		void createObject(){
 			
 			buldozer.set(WIDTH,WIDTH, 0, -10);
 			
@@ -282,14 +299,16 @@ class Gameplay{
 		void loose(){
 			//cout << "You loose :( " << endl;
 			//tampilkan pop up kalah
-			Finish finish;
+			backgroundMusic.stop();
+			finish.playLoseSound();
 			finish.displayLoose();
 		}
 		//menang
 		void win(){
 			//cout << "You win :) " << endl;
 			//tampilkan pop up menang
-			Finish finish;
+			backgroundMusic.stop();
+			finish.playLoseSound();
 			finish.displayWin();
 		}
 };

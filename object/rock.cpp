@@ -1,9 +1,15 @@
 
 GLubyte colorRock[3] = {66, 185, 244};
 char textureRock[] = "texture/box.tga";
+char rockSound[] = "sound/explosion.wav";
+int rockSoundVolume = 100;
+
 class Rock: public Moveobject{
 	
 	public:
+		Rock(){
+			setSound(rockSound, rockSoundVolume);
+		}
 		void display(){
 			setTexture(textureRock);
 			Object::display();
