@@ -11,7 +11,7 @@ default: main
 
 .PHONY: main
 main:
-	g++ main.cpp -Wall -o main  -lglfw3 -lGL -lX11 -lXi -lXrandr -lXxf86vm -lXinerama -lXcursor -lrt -lm -pthread -lglut -lGLU
+	g++ main.cpp -Wall -o main  -lglfw3 -lGL -lX11 -lXi -lXrandr -lXxf86vm -lXinerama -lXcursor -lrt -lm -pthread -lglut -lGLU -lsfml-audio
 
 .PHONY: clean
 clean:
