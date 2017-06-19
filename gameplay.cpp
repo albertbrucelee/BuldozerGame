@@ -88,16 +88,22 @@ class Gameplay{
 			point[4].set(WIDTH,WIDTH,80,30);
 			point[5].set(WIDTH,WIDTH,80,0);
 
-
-
-
-			rock[0].set(WIDTH,WIDTH,-80,25);	//-20,-25
+			rock[0].set(WIDTH,WIDTH,-80,25);
 			rock[1].set(WIDTH,WIDTH,20,-25);
 			rock[2].set(WIDTH,WIDTH,10,-10);
 			rock[3].set(WIDTH,WIDTH,40,25);
 			rock[4].set(WIDTH,WIDTH,65,-10);
 			rock[5].set(WIDTH,WIDTH,75,-25);
-			
+	
+/*			
+			//cheat (for debug)
+			rock[0].set(WIDTH,WIDTH,-83,-15);
+			rock[1].set(WIDTH,WIDTH,-75,-36);
+			rock[2].set(WIDTH,WIDTH,-40,-23);
+			rock[3].set(WIDTH,WIDTH,65,-35);
+			rock[4].set(WIDTH,WIDTH,72,30);
+			rock[5].set(WIDTH,WIDTH,60,0);
+*/
 		}
 		//display semua object
 		void displayObject(){ 
@@ -297,7 +303,7 @@ class Gameplay{
 			//cout << "You win :) " << endl;
 			//tampilkan pop up menang
 			backgroundMusic.stop();
-			finish.playLoseSound();
+			finish.playWinSound();
 			finish.displayWin();
 		}
 		//menang
