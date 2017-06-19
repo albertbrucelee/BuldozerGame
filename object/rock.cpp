@@ -1,11 +1,11 @@
 
 GLubyte colorRock[3] = {66, 185, 244};
 char textureRock[] = "texture/box.tga";
+char textureRockDone[] = "texture/box_done.tga";
 char rockSound[] = "sound/rock.wav";
-int rockSoundVolume = 100;
+int rockSoundVolume = 80;
 
 class Rock: public Moveobject{
-	
 	public:
 		Rock(){
 			setSound(rockSound, rockSoundVolume);
@@ -14,7 +14,59 @@ class Rock: public Moveobject{
 			setTexture(textureRock);
 			Object::display();
 		}
+		void displayDone(){
+			setTexture(textureRockDone);
+			Object::display();
+		}
 		
+		bool notHitTopRock(Rock object[], int n, int index){
+			for(int i=0; i<n; i++){
+				if(index!=i){
+					if(n==6) //cout << "#" << i ;
+					//if(n==6) //cout<< "#" << i << " " << index << endl;
+					if(!(canTurnUp(object[i])))
+						return false;
+				}
+			}
+			//cout << "#true" << endl;
+			return true;
+		}
+		bool notHitDownRock(Rock object[], int n, int index){
+			for(int i=0; i<n; i++){
+				if(index!=i){
+					if(n==6) //cout << "#" << i ;
+					//if(n==6) //cout<< "#" << i << " " << index << endl;
+					if(!(canTurnDown(object[i])))
+						return false;
+				}
+			}
+			//cout << "#true" << endl;
+			return true;
+		}
+		bool notHitLeftRock(Rock object[], int n, int index){
+			for(int i=0; i<n; i++){
+				if(index!=i){
+					if(n==6) //cout << "#" << i ;
+					//if(n==6) //cout<< "#" << i << " " << index << endl;
+					if(!(canTurnLeft(object[i])))
+						return false;
+				}
+			}
+			//cout << "#true" << endl;
+			return true;
+		}
+		bool notHitRightRock(Rock object[], int n, int index){
+			for(int i=0; i<n; i++){
+				if(index!=i){
+					if(n==6) //cout << "#" << i ;
+					//if(n==6) //cout<< "#" << i << " " << index << endl;
+					if(!(canTurnRight(object[i])))
+						return false;
+				}
+			}
+			//cout << "#true" << endl;
+			return true;
+		}
 		/*
 		//############ Apakah Object tidak berhimpit dengan batu lain ############
 		bool notHitRockTop(Rock rock[], int index){
@@ -54,12 +106,12 @@ class Rock: public Moveobject{
 		//return -1 jika tidak
 		int calcPoint(Object object[]){
 			for(int i=0; i<totalRock; i++){
-				//cout << "calcPoint" << i << endl;
-				//cout << coordTop() << " " << object[i].coordTop() << endl;
-				//cout << coordDown() << " " << object[i].coordDown() << endl;
-				//cout << coordLeft() << " " << object[i].coordLeft() << endl;
-				//cout << coordRight() << " " << object[i].coordRight() << endl;
-				//cout << endl;
+				////cout << "calcPoint" << i << endl;
+				////cout << coordTop() << " " << object[i].coordTop() << endl;
+				////cout << coordDown() << " " << object[i].coordDown() << endl;
+				////cout << coordLeft() << " " << object[i].coordLeft() << endl;
+				////cout << coordRight() << " " << object[i].coordRight() << endl;
+				////cout << endl;
 				if(coordTop()!=object[i].coordTop())
 					continue;
 				if(coordDown()!=object[i].coordDown())	

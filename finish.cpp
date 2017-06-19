@@ -1,6 +1,7 @@
 
 GLubyte colorWin[3] = {23, 10, 209};
 GLubyte colorLoose[3] = {214, 10, 10};
+char textureNewStart[] = "texture/hint.tga";
 char textureFinish[] = "texture/win.tga";
 char textureLoose[] = "texture/lose.tga";
 		
@@ -64,6 +65,10 @@ class Finish : public Object{
 		}
 		void displayWin(){
 			setTexture(textureFinish);
+			display();
+		}
+		void displayNewStart(){
+			setTexture(textureNewStart);
 			display();
 		}
 		void playLoseSound(){

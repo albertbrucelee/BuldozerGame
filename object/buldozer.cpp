@@ -81,5 +81,55 @@ class Buldozer: public Moveobject{
 				return false;
 			return true;
 		}
+		
+		
+		bool notHitTopRock(Rock object[], int n, int index){
+			for(int i=0; i<n; i++){
+				if(index!=i){
+					if(n==6) //cout << "#" << i ;
+					//if(n==6) //cout<< "#" << i << " " << index << endl;
+					if(!(canTurnUp(object[i])))
+						return false;
+				}
+			}
+			//cout << "#true" << endl;
+			return true;
+		}
+		bool notHitDownRock(Rock object[], int n, int index){
+			for(int i=0; i<n; i++){
+				if(index!=i){
+					if(n==6) //cout << "#" << i ;
+					//if(n==6) //cout<< "#" << i << " " << index << endl;
+					if(!(canTurnDown(object[i])))
+						return false;
+				}
+			}
+			//cout << "#true" << endl;
+			return true;
+		}
+		bool notHitLeftRock(Rock object[], int n, int index){
+			for(int i=0; i<n; i++){
+				if(index!=i){
+					if(n==6) //cout << "#" << i ;
+					//if(n==6) //cout<< "#" << i << " " << index << endl;
+					if(!(canTurnLeft(object[i])))
+						return false;
+				}
+			}
+			//cout << "#true" << endl;
+			return true;
+		}
+		bool notHitRightRock(Rock object[], int n, int index){
+			for(int i=0; i<n; i++){
+				if(index!=i){
+					if(n==6) //cout << "#" << i ;
+					//if(n==6) //cout<< "#" << i << " " << index << endl;
+					if(!(canTurnRight(object[i])))
+						return false;
+				}
+			}
+			//cout << "#true" << endl;
+			return true;
+		}
 	
 };

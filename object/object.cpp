@@ -11,6 +11,9 @@ class Object{
 	
 		
 	public:
+		Object(){
+			y=x=111;
+		}
 		void glTga(void)
 		{
 			glEnable (GL_DEPTH_TEST);

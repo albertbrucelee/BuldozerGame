@@ -12,20 +12,22 @@ int pairedRockPoint[totalRock];
 //total rock yang telah di atas point
 int totalRockFinish;
 */
-//pasangan rock dengan point. nilai 0 jika rock tidak berpasangan. bernilai index point, jika rock berpasangan
+//pasangan rock dengan point. Tidak ada, jika batu belum berpasangan
 map<int, int> finishRock;
 map<int, int>::iterator finishRock_it;
 //rock berhimpit dengan tembok
 bool rockFailed;
 
-
-char backgroundMusicLocation[] = "sound/backgroundMusic.ogg";
+char backgroundMusicLocation[] = "sound/backgroundMusic.wav";
 int backgroundMusicVolume = 50;
+char rockDoneSoundLocation[] = "sound/rock_done.wav";
+int rockDoneSoundVolume = 100;
 
 
 class Gameplay{
 	private:
 		Sound backgroundMusic;
+		Sound rockDoneSound;
 		Finish finish;
 	
 	public:
@@ -46,6 +48,7 @@ class Gameplay{
 			backgroundMusic.set(backgroundMusicLocation, backgroundMusicVolume);
 			backgroundMusic.loop();
 			backgroundMusic.play();
+			rockDoneSound.set(rockDoneSoundLocation, rockDoneSoundVolume);
 		}
 		//membuat semua object
 		void createObject(){
@@ -103,7 +106,10 @@ class Gameplay{
 				wall[i].display();
 			}
 			for(int i=0; i<totalRock; i++){
-				rock[i].display();
+				if(finishRock.find(i) == finishRock.end())
+					rock[i].display();
+				else
+					rock[i].displayDone();					
 			}
 			for(int i=0; i<totalRock; i++){
 				point[i].display();
@@ -121,8 +127,9 @@ class Gameplay{
 				//jika batu telah diatas suatu point
 				if(indexPoint!=-1){
 					finishRock[i] = indexPoint;
-					cout << "Finish: Rock-" << i << " with point-" << indexPoint << endl;
+					cout << "Finish Rock-" << i << " with point-" << indexPoint << endl;
 					cout << "Total Finish: " << finishRock.size() << endl;
+					rockDoneSound.play();
 				}
 			}
 			//jika sebelumnya batu telah berpasangan dengan point, maka lokasi batu sekarang telah bergeser menjadi tidak diatas point
@@ -131,25 +138,6 @@ class Gameplay{
 				//unset, bahwa batu tidak lagi berpasangan dengan point manapun
 				finishRock.erase(i);
 			}
-			/*
-			if(pairedRockPoint[i]==-1){
-				int indexPoint = rock[i].calcPoint(point);
-				//jika batu telah diatas suatu point
-				if(indexPoint!=-1){
-					pairedRockPoint[i] = indexPoint;
-					totalRockFinish++;
-					cout << "Finish: Rock-" << i << " with point-" << pairedRockPoint[i] << endl;
-					cout << "Total Finish: " << totalRockFinish << endl;
-				}
-			}
-			//jika sebelumnya batu telah berpasangan dengan point, maka lokasi batu sekarang telah bergeser menjadi tidak diatas point
-			else{
-				cout << "Not Finish: " << i << endl;
-				//set, bahwa batu tidak lagi berpasangan dengan point manapun
-				pairedRockPoint[i] = -1;
-				totalRockFinish--;
-			}
-			* */
 		}
 		//menghitung apakah rock berdempet dengan tembok
 		void calcRockFailed(int i){
@@ -162,8 +150,10 @@ class Gameplay{
 			for(int i=0; i<totalRock; i++){
 				//jika di atas buldozer ada rock
 				if(buldozer.hitRockTop(rock[i])){
+					//cout << endl << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << i << endl;
+					//cout << rock[4].coordDown() << endl;
 					//jika di atas batu tidak ada dinding && di atas batu tidak ada batu yang lain && di atas buldozer tidak ada dinding (kondisi hanya sebagian buldozer yang mengenai batu, dan sebagian lainnya mengenai dinding) && di atas buldozer tidak ada rock lain (kondisi hanya sebagian buldozer yang mengenai batu, dan sebagian lainnya mengenai batu lain)
-					if(rock[i].notHitTop(wall,totalWall, -1) && rock[i].notHitTop(rock, totalRock, i) && buldozer.notHitTop(wall,totalWall, -1) && buldozer.notHitTop(rock, totalRock, i)) {	// && rock[i].turnUp(rock)
+					if(rock[i].notHitTop(wall,totalWall, -1) && rock[i].notHitTopRock(rock, totalRock, i) && buldozer.notHitTop(wall,totalWall, -1) && buldozer.notHitTopRock(rock, totalRock, i)) {	// && rock[i].turnUp(rock)
 						//buldozer move ke atas
 						buldozer.moveUp();
 						//rock move ke atas
@@ -186,7 +176,7 @@ class Gameplay{
 				//jika di bawah buldozer ada rock
 				if(buldozer.hitRockDown(rock[i])){
 					//jika di bawah batu tidak ada dinding && di bawah batu tidak ada batu yang lain
-					if(rock[i].notHitDown(wall,totalWall, -1) && rock[i].notHitDown(rock, totalRock, i) && buldozer.notHitDown(wall,totalWall, -1) && buldozer.notHitDown(rock, totalRock, i)) {	// && rock[i].turnUp(rock)
+					if(rock[i].notHitDown(wall,totalWall, -1) && rock[i].notHitDownRock(rock, totalRock, i) && buldozer.notHitDown(wall,totalWall, -1) && buldozer.notHitDownRock(rock, totalRock, i)) {	// && rock[i].turnUp(rock)
 						//buldozer move ke bawah
 						buldozer.moveDown();
 						//rock move ke bawah
@@ -209,7 +199,7 @@ class Gameplay{
 				//jika di kiri buldozer ada rock
 				if(buldozer.hitRockLeft(rock[i])){
 					//jika di kiri batu tidak ada dinding && di kiri batu tidak ada batu yang lain
-					if(rock[i].notHitLeft(wall,totalWall, -1) && rock[i].notHitLeft(rock, totalRock, i) && buldozer.notHitLeft(wall,totalWall, -1) && buldozer.notHitLeft(rock, totalRock, i)) {	// && rock[i].turnUp(rock)
+					if(rock[i].notHitLeft(wall,totalWall, -1) && rock[i].notHitLeftRock(rock, totalRock, i) && buldozer.notHitLeft(wall,totalWall, -1) && buldozer.notHitLeftRock(rock, totalRock, i)) {	// && rock[i].turnUp(rock)
 						//buldozer move ke kiri
 						buldozer.moveLeft();
 						//rock move ke kiri
@@ -232,7 +222,7 @@ class Gameplay{
 				//jika di kanan buldozer ada rock
 				if(buldozer.hitRockRight(rock[i])){
 					//jika di kanan batu tidak ada dinding && di kanan batu tidak ada batu yang lain
-					if(rock[i].notHitRight(wall,totalWall, -1) && rock[i].notHitRight(rock, totalRock, i) && buldozer.notHitRight(wall,totalWall, -1) && buldozer.notHitRight(rock, totalRock, i)) {	// && rock[i].turnUp(rock)
+					if(rock[i].notHitRight(wall,totalWall, -1) && rock[i].notHitRightRock(rock, totalRock, i) && buldozer.notHitRight(wall,totalWall, -1) && buldozer.notHitRightRock(rock, totalRock, i)) {	// && rock[i].turnUp(rock)
 						//buldozer move ke kanan
 						buldozer.moveRight();
 						//rock move ke kanan
@@ -294,9 +284,8 @@ class Gameplay{
 				return true;
 			return false;
 		}
-		
 		//kalah
-		void loose(){
+		void lose(){
 			//cout << "You loose :( " << endl;
 			//tampilkan pop up kalah
 			backgroundMusic.stop();
@@ -310,6 +299,10 @@ class Gameplay{
 			backgroundMusic.stop();
 			finish.playLoseSound();
 			finish.displayWin();
+		}
+		//menang
+		void newStart(){
+			finish.displayNewStart();
 		}
 };
 	

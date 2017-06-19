@@ -25,6 +25,8 @@
 //g++ -Wall -o "%e" "%f" -lglfw3 -lGL -lX11 -lXi -lXrandr -lXxf86vm -lXinerama -lXcursor -lrt -lm -pthread -lglut -lGLU -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 using namespace std;
 
+bool isNewStart = true;
+
 const float WIDTH = 10;
 
 #define frameWidth 200
@@ -75,8 +77,12 @@ void setup_viewport(GLFWwindow* window)
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
 	if(action==GLFW_PRESS || action==GLFW_REPEAT){
+		if(isNewStart){
+			if(key == GLFW_KEY_ENTER)
+				isNewStart = !isNewStart;
+		}
 		//gameplay key input (while not lose and not win)
-		if(!gameplay.calcFailed() && !gameplay.calcFinish()){
+		else if(!gameplay.calcFailed() && !gameplay.calcFinish()){
 			switch(key) {
 				// close program on ESC key
 				case GLFW_KEY_ESCAPE:
@@ -140,10 +146,13 @@ int main(void)
         
         //grid_display();
 			//gameplay.win();
-		
+		//start game
+		if(isNewStart){
+			gameplay.newStart();
+		}
 		//apakah kalah?
-        if(gameplay.calcFailed()){
-			gameplay.loose();
+        else if(gameplay.calcFailed()){
+			gameplay.lose();
 		}
 		//apakah menang?
 		else if(gameplay.calcFinish()){

@@ -13,8 +13,7 @@ class Sound{
 		
 		void play(){
 			//jika music telah nyala, maka tidak bisa play
-			if(isPlay)
-				return;
+			//if(isPlay) return;
 			music.play();
 			isPlay=true;
 		}
