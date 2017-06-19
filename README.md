@@ -19,7 +19,7 @@ Buldozer can only push one box, and cannot pull the box<br/>
 Bulldozers can not push the box that is attached to the wall<br/>
 Bulldozers can not push the box that is attached with another box
 
-Win if all box is above all point
+Win if all box is above all point<br />
 Lose if box hit wall</p>
 
 # OpenGL Techniques used #
