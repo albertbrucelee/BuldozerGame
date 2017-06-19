@@ -12,17 +12,24 @@ Developed in OpenGL<br/>
     You can freely modify the program, under the GNU License :)
 
 # Game Play #
-<p>Buldozer must move all the rock to destination point
-
-Buldozer	: brown color<br/>
-Wall		: green color<br/>
-Rock		: blue color<br/>
-Rock destination point: red color
+<p>Buldozer must move all the box to destination point
 
 Buldozer can not hit wall<br/>
-Buldozer can push rock<br/>
-Buldozer can not push rock in front of the wall<br/>
-Buldozer can not push rock in front of the other rock
+Buldozer can only push one box, and cannot pull the box<br/>
+Bulldozers can not push the box that is attached to the wall<br/>
+Bulldozers can not push the box that is attached with another box
 
-Win if all rock is above all point
-Loose if rock hit wall</p>
+Win if all box is above all point
+Lose if box hit wall</p>
+
+# OpenGL Techniques used #
+1. Geometry
+2. Transformation (translate, rotate, resize)
+3. Interaction (GLUT Keyboard)
+4. Texture
+5. Sound (with library)
+
+# OOP Techniques used #
+1. Encapsulation
+2. Inheritance
+3. Polymorphism
