@@ -7,8 +7,8 @@
  * 
  * Developed by:
  * 	Albert Alfrianta - albert.brucelee@gmail.com
- * 	Aprilian Nur
- *  Michael Julyus Christopher Manullang
+ * 	Aprilian Nur - aprilian.nur.w@gmail.com
+ *	Michael Julyus Christopher Manullang - michaeljulyus@gmail.com
  * 
  * You can freely modify the program, under the GNU License :)
  * 
