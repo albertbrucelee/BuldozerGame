@@ -54,7 +54,6 @@ const float WIDTH = 10;
 
 Gameplay gameplay;
 
-
 void setup_viewport(GLFWwindow* window)
 {
     // setting viewports size, projection etc
@@ -71,9 +70,6 @@ void setup_viewport(GLFWwindow* window)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
-
-
-
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
 	if(action==GLFW_PRESS || action==GLFW_REPEAT){
@@ -114,7 +110,6 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 			
 	}
 }
-
 
 int main(void)
 {
@@ -171,7 +166,6 @@ int main(void)
 
     exit(EXIT_SUCCESS);
 }
-
 
 
 /*
