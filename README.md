@@ -40,8 +40,6 @@ You can lose if the box is too close to the wall, because buldozer cannot pull t
 1. Encapsulation
 2. Inheritance
 3. Polymorphism
-
-
 5. Sound (with SFML library, for installation, look at https://www.sfml-dev.org/tutorials/2.4/start-linux.php)
 
 # OOP Techniques used #
@@ -49,12 +47,12 @@ You can lose if the box is too close to the wall, because buldozer cannot pull t
 2. Inheritance
 3. Polymorphism
 
-#Run on linux#
+# Run on linux #
 Open Terminal, and run:<br/>
 sudo chmod +x main<br/>
 ./main<br/>
 
-#Run on windows#
+# Run on windows #
 Open folder "WindowsDll"<br/>
 Copy it to C:\Windows\System or you can copy it to the same directory as the exe directory<br/>
 And run the main.exe
