@@ -11,6 +11,13 @@ Developed in OpenGL<br/>
 
     You can freely modify the program, under the GNU License :)
 
+
+# Screenshots
+<p align="center">
+  <img src="http://s.pictub.club/2017/06/20/7SOFaP.png" width="850"/>
+  <img src="http://s.pictub.club/2017/06/20/7SO3y6.png" width="850"/>
+</p>
+
 # Game Play #
 <p>Buldozer must move all the box to destination point
 
