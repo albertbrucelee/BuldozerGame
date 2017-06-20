@@ -55,4 +55,4 @@ sudo chmod +x main<br/>
 # Run on windows #
 Open folder "WindowsDll"<br/>
 Copy it to C:\Windows\System or you can copy it to the same directory as the exe directory<br/>
-And run the main.exe
+Then run the main.exe
