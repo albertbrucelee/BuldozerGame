@@ -11,10 +11,11 @@ Developed in OpenGL<br/>
 
     You can freely modify the program, under the GNU License :)
 
+# Video
+<p align="center"><a href="http://www.youtube.com/watch?feature=player_embedded&v=Kr2xHJ-S5jE" target="_blank"><img src="http://img.youtube.com/vi/Kr2xHJ-S5jE/0.jpg" alt="2D OpenGL Bulldozer Game" width="500" border="10" /></a></p>
 
-# Screenshots
+# Screenshot
 <p align="center">
-  <img src="http://s.pictub.club/2017/06/20/7SOFaP.png" width="850"/>
   <img src="http://s.pictub.club/2017/06/20/7SO3y6.png" width="850"/>
 </p>
 
